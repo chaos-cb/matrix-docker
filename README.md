@@ -3,20 +3,6 @@
 
 A docker-compose configuration of Synapse, Element Web Client and some additional components with focus on privacy.
 
-## Background
-
-While many of the aspects of Matrix are very appealing (e.g. open source, decentralisation and federation, lots of bridges, e2e encryption, etc.), most of the installation instructions do not focus that much on the configuration of the Matrix homeserver with regard to privacy aspects.
-
-Due to the nature of the federation in the Matrix network, some features obviously do require data exchange with other servers (e.g. messsaging a user on a federated server). Some other features, however, may not always be required or desired, e.g. allowing lookup of users on your Matrix server by 3PID (3rd-party identifiers, e.g. email).
-
-Unfortunately, many default settings of a standard Matrix installation (i.e. Synapse and Element) do not promote privacy and/or rely on external servers (`matrix.org` and `vector.im`, the company behind the Element Matrix client).
-
-There has been a quite thorough analysis of such a Matrix default setup with regard to data privacy published on [Gitlab](https://gitlab.com/libremonde-org/papers/research/privacy-matrix.org) and [Github](https://gist.github.com/maxidorius/5736fd09c9194b7a6dc03b6b8d7220d0). This publication was followed by some lengthy dispute between the authors of this research and some of the people behind Matrix/Synapse:
-
-- Discussion on Hacker News: https://news.ycombinator.com/item?id=20178267
-- Detailed response of the matrix.org people: https://matrix.org/~matthew/Response_to_-_Notes_on_privacy_and_data_collection_of_Matrix.pdf
-- Official matrix.org blog post referring to this discussion and providing some thoughts on improving the privacy: https://matrix.org/blog/2019/06/30/tightening-up-privacy-in-matrix
-
 
 ## Goal
 
@@ -63,6 +49,21 @@ Additional planned components:
 - matrix-registration (for tokenized self-registration)
 
 After that, I may think about adding some bots or bridges (e.g. Telegram).
+
+
+## Background
+
+While many of the aspects of Matrix are very appealing (e.g. open source, decentralisation and federation, lots of bridges, e2e encryption, etc.), most of the installation instructions do not focus that much on the configuration of the Matrix homeserver with regard to privacy aspects.
+
+Due to the nature of the federation in the Matrix network, some features obviously do require data exchange with other servers (e.g. messsaging a user on a federated server). Some other features, however, may not always be required or desired, e.g. allowing lookup of users on your Matrix server by 3PID (3rd-party identifiers, e.g. email).
+
+Unfortunately, many default settings of a standard Matrix installation (i.e. Synapse and Element) do not promote privacy and/or rely on external servers (`matrix.org` and `vector.im`, the company behind the Element Matrix client).
+
+There has been a quite thorough analysis of such a Matrix default setup with regard to data privacy published on [Gitlab](https://gitlab.com/libremonde-org/papers/research/privacy-matrix.org) and [Github](https://gist.github.com/maxidorius/5736fd09c9194b7a6dc03b6b8d7220d0). This publication was followed by some lengthy dispute between the authors of this research and some of the people behind Matrix/Synapse:
+
+- Discussion on Hacker News: https://news.ycombinator.com/item?id=20178267
+- Detailed response of the matrix.org people: https://matrix.org/~matthew/Response_to_-_Notes_on_privacy_and_data_collection_of_Matrix.pdf
+- Official matrix.org blog post referring to this discussion and providing some thoughts on improving the privacy: https://matrix.org/blog/2019/06/30/tightening-up-privacy-in-matrix
 
 
 ## Additional Resources
