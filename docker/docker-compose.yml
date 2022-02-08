@@ -1,0 +1,42 @@
+version: "3.8"
+
+volumes:
+  data:
+    name: synapse-data
+    external: true
+  media:
+    name: synapse-media
+    external: true
+  dbdata:
+    name: synapse-db
+    external: true
+  
+networks:
+  proxy-network:
+    external: true
+
+services:
+  synapse:
+    image: matrixdotorg/synapse:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - data:/data
+      - media:/data/media_store
+    networks:
+      - default
+      - proxy-network     # you may need to change that if you already have a reverse proxy running
+    depends_on:
+      - db
+
+  db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER    # provide this via .env file
+      - POSTGRES_PASSWORD    # provide this via .env file
+      # ensure the database gets created correctly
+      # https://matrix-org.github.io/synapse/latest/postgres.html#set-up-database
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    volumes:
+      - dbdata:/var/lib/postgresql/data

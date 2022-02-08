@@ -1,0 +1,41 @@
+{
+        # debug
+        email contact@DOMAIN.TLD                # This email is provided as contact address when acquiring Let's Encrypt certificates
+
+        # auto_https disable_redirects          # use only for testing and debugging!
+}
+
+proxy {
+        acme_server
+        tls internal
+}
+
+(matrix-well-known-header) {
+        # Headers
+        header Access-Control-Allow-Origin "*"
+        header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+        header Content-Type "application/json"
+}
+
+DOMAIN.TLD {
+        handle /.well-known/matrix/server {
+            import matrix-well-known-header
+            respond `{"m.server":"matrix.DOMAIN.TLD:443"}`
+        }
+
+        handle /.well-known/matrix/client {
+            import matrix-well-known-header
+            respond `{"m.homeserver":{"base_url":"https://matrix.DOMAIN.TLD"}}`
+        } 
+
+        respond "Hello World!"
+
+}
+
+
+matrix.DOMAIN.TLD {
+        reverse_proxy /_matrix/* http://synapse:8008
+        reverse_proxy /_synapse/client/* http://synapse:8008
+
+}

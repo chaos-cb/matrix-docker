@@ -1,0 +1,26 @@
+version: "3.8"
+
+volumes:
+  caddydata:
+    name: proxy-caddydata
+    external: true        # marked as external, so that it will not be deleted accidentally, e.g. by docker-compose down -v
+
+networks:
+  proxy:
+    name: proxy-network
+
+services:
+  caddy:
+    container_name: proxy
+    image: caddy:latest
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./etc-caddy:/etc/caddy:ro
+      - caddydata:/data
