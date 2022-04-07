@@ -39,3 +39,17 @@ services:
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
     volumes:
       - dbdata:/var/lib/postgresql/data
+
+  registration:
+    image: zeratax/matrix-registration:v0.9.2.dev2
+    container_name: matrix-registration
+    command: serve
+    volumes:
+      - ./data-registration/:/data
+    networks:
+      - default
+      - proxy-network     # you may need to change that if you already have a reverse proxy running
+    ports:
+      - 5000:5000
+    depends_on:
+      - synapse

@@ -27,7 +27,12 @@ DOMAIN.TLD {
         handle /.well-known/matrix/client {
             import matrix-well-known-header
             respond `{"m.homeserver":{"base_url":"https://matrix.DOMAIN.TLD"}}`
-        } 
+        }
+
+        handle {
+            reverse_proxy /register http://matrix-registration:5000
+            reverse_proxy /static/* http://matrix-registration:5000
+        }
 
         respond "Hello World!"
 
