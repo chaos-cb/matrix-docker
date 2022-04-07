@@ -31,9 +31,29 @@ To generate a config stub, run the following command:
 
 ```
 docker run -it --rm \
-    -v synapse-data:/data \
+    -v ${PWD}/data/:/data \
     -v synapse-media:/data/media_store \
-    -e SYNAPSE_SERVER_NAME=DOMAIN.TLD \
+    -e SYNAPSE_SERVER_NAME=lab.chaos-cb.de \
     -e SYNAPSE_REPORT_STATS=no \
+    -u 991:991 \
     matrixdotorg/synapse:latest generate
+```
+
+### Adapt homeserver.yaml to your needs
+
+to be added
+
+
+### Startup
+
+```
+docker-compose up -d
+```
+
+Right after the containers are started, we need to fix the owner of the media_store directory. For whatever reason, when Docker attaches the media volume the /data/media_store directory will be owned by root. This will lead to permission errors when users try to upload files.
+
+Fix this by running the following command (needs to be done only once):
+
+```
+docker exec -it matrix-synapse chown 991:991 /data/media_store
 ```
