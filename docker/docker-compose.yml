@@ -55,3 +55,14 @@ services:
       - 5000:5000
     depends_on:
       - synapse
+
+  maubot:
+    image: dock.mau.dev/maubot/maubot:v0.3.1
+    container_name: matrix-maubot
+    restart: unless-stopped
+    volumes:
+      - ./data-maubot/:/data
+    ports:
+      - 29316:29316
+    depends_on:
+      - synapse
