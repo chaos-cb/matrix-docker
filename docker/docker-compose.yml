@@ -31,6 +31,7 @@ services:
   db:
     image: postgres:14-alpine
     container_name: matrix-postgres
+    restart: unless-stopped
     environment:
       - POSTGRES_USER    # provide this via .env file
       - POSTGRES_PASSWORD    # provide this via .env file
@@ -43,6 +44,7 @@ services:
   registration:
     image: zeratax/matrix-registration:v0.9.2.dev2
     container_name: matrix-registration
+    restart: unless-stopped
     command: serve
     volumes:
       - ./data-registration/:/data
