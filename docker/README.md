@@ -68,7 +68,8 @@ It's configured in the docker compose file as additional service `matrix-registr
 
 This registration addon also has an `/api/token` endpoint to create/disable/list tokens. However, for security reasons this endpoint is not routed/forwarded by the reverse proxy (i.e. not configured in the `Caddyfile`). More on this in the documentation: https://github.com/zeratax/matrix-registration/wiki/reverse-proxy
 
-In order to access this endpoint (e.g. to create tokens), please do this from the Docker host machine. For this, the addon's port 5000 is forwarded to the host (in docker compose file). Make sure that this port is not exposed to the internet (check the host's firewall).
+In order to access this endpoint (e.g. to create tokens), please do this from the Docker host machine. For this, the addon's port 5000 is forwarded to the host (in docker compose file). Make sure that this port is not exposed to the internet (check the host's firewall). 
+You can then e.g. use port-forwarding to your local computer when connecting via ssh to the host (see ssh parameter -L).
 
 There is a convenience bash script [data-registration/create_token.sh](data-registration/create_token.sh), which was taken from the matrix-registration documentation as well: https://github.com/zeratax/matrix-registration/wiki/script-examples
 
@@ -83,3 +84,24 @@ Create a `config.yaml` based on [data-registration/config.sample.yaml](data-regi
 
 See also the documentation for the addon configuration on Github: https://github.com/zeratax/matrix-registration/wiki#configuration
 
+## Maubot addon
+
+Maubot is a very well written Matrix Bot service, which allows to load dozens of plugins for various types of bots and bridges.
+
+It's configured in the docker compose file as additional service `matrix-maubot`.
+
+The standard way to use Maubot is via its web interface. In order to access the web interface, please do this from the Docker host machine. For this the maubot's port 29316 is forwarded to the host (in docker compose file). Make sure that this port is not exposed to the internet (check the host's firewall). You can then e.g. use port-forwarding to your local computer when connecting via ssh to the host (see ssh parameter -L).
+
+The default URL to access the web interface is: 
+
+http://localhost:29316/_matrix/maubot
+
+### Configuration
+
+In docker compose file, all of maubot's data and config is bind mounted to a local directory (`data-maubot`). Initially, this directory is empty. Launch maubot once (e.g. ramping up everything: `docker-compose up -d`) so that it can generate a default config.
+
+Then stop the service and update the `config.yaml` inside the `data-maubot` directory.
+
+You have to add at least one user (username + password) in the `admins` section of the config. The root user can't have a password. See https://docs.mau.fi/maubot/usage/basic.html.
+
+You can login to the web interface then and start adding your bot plugins and configuring your bots. Please check out this nice how-to blog post: https://www.tmplab.org/2020/04/01/how-to-install-and-run-bots-for-the-matrix-network/
